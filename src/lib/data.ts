@@ -135,7 +135,7 @@ export const products = [
         "title": "Default Title",
         "option1": "Default Title",
         "option2": null,
-        "price": "10.00",
+        "price": "1999.00",
         "sku": null,
         "available": false
       }
