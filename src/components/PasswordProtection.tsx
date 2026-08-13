@@ -34,15 +34,8 @@ export default function PasswordProtection({ children }: { children: React.React
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
       
-      <div style={{ marginBottom: 40 }}>
-        {/* Shopify logo mock */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M25.7 8.2l-3-6.1c-.2-.4-.8-.6-1.2-.4L6.9 8.2c-.4.2-.6.7-.4 1.1l7.8 17.6c.1.3.5.5.9.5h.1c.4 0 .7-.3.8-.7L19.2 14l6.1 4.3c.3.2.8.2 1.1-.1s.3-.8.1-1.1l-6-6.8 5.6-1.1c.4-.1.7-.5.6-1z" fill="#95BF47"/>
-            <path d="M21.5 2.1l-14.6 6.5C6.5 8.8 6.1 9.4 6.3 10l7.8 17.6c.1.3.5.5.9.5h.1c.4 0 .7-.3.8-.7L19 14l-8.6-2.7L21.5 2.1z" fill="#5E8E3E"/>
-          </svg>
-          <span style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-1px' }}>shopify</span>
-        </div>
+      <div style={{ marginBottom: 40, textAlign: 'center' }}>
+        <img src="/shopify_icon.svg" alt="Shopify" style={{ height: 36, width: 'auto' }} />
       </div>
 
       <div style={{ width: '100%', maxWidth: 400, padding: '0 20px' }}>
