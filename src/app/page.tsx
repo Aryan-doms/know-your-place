@@ -1,69 +1,122 @@
-import Image from "next/image";
+'use client';
+
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 
 export default function Home() {
+  const logoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const logo = logoRef.current;
+    if (!logo) return;
+
+    const logoW = 460;
+    const logoH = 220;
+
+    let x = Math.random() * (window.innerWidth - logoW);
+    let y = Math.random() * (window.innerHeight - logoH);
+    let dx = 1.5;
+    let dy = 1.2;
+    let raf: number;
+
+    const animate = () => {
+      x += dx;
+      y += dy;
+
+      const maxX = window.innerWidth - logoW;
+      const maxY = window.innerHeight - logoH;
+
+      if (x <= 0) { x = 0; dx = Math.abs(dx); }
+      if (x >= maxX) { x = maxX; dx = -Math.abs(dx); }
+      if (y <= 0) { y = 0; dy = Math.abs(dy); }
+      if (y >= maxY) { y = maxY; dy = -Math.abs(dy); }
+
+      logo.style.transform = `translate(${x}px, ${y}px)`;
+      raf = requestAnimationFrame(animate);
+    };
+
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        overflow: 'hidden',
+        backgroundColor: '#b82e2e',
+      }}
+    >
+      {/* Red bubble-wrap texture — same image as body but tinted red via the bg color behind */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: "url('/assets/lockscreen-texture.webp')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          mixBlendMode: 'multiply',
+          opacity: 0.55,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* DVD-bouncing KYD logo */}
+      <div
+        ref={logoRef}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: 460,
+          pointerEvents: 'none',
+          zIndex: 10,
+          willChange: 'transform',
+        }}
+      >
+        <img
+          src="/assets/lockscreen-logo.webp"
+          alt="KYD Logo"
+          style={{ width: '100%', height: 'auto', display: 'block' }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </div>
+
+      {/* ENTER THE VOID button — bottom center, exactly like the real site */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 48,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 20,
+        }}
+      >
+        <Link href="/pages/catalog">
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '12px 24px',
+              border: '3px solid #000',
+              backgroundColor: '#efefef',
+              boxShadow: '4px 4px 0 #000',
+              cursor: 'pointer',
+              fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
+              fontWeight: 700,
+              fontSize: 18,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: '#000',
+              whiteSpace: 'nowrap',
+            }}
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            ENTER THE VOID
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }
