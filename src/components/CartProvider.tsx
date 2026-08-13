@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { products } from '@/lib/data';
 
 export type CartItem = {
   id: string; // variant id
@@ -33,7 +34,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const saved = localStorage.getItem('kyd_cart');
     if (saved) {
       try {
-        setItems(JSON.parse(saved));
+        const parsed: CartItem[] = JSON.parse(saved);
+        const synced = parsed.map((item) => {
+          const prod = products.find((p: any) => p.id.toString() === item.productId || p.variants.some((v: any) => v.id.toString() === item.id));
+          if (prod) {
+            const variant = prod.variants.find((v: any) => v.id.toString() === item.id) || prod.variants[0];
+            return {
+              ...item,
+              price: variant?.price || item.price,
+            };
+          }
+          return item;
+        });
+        setItems(synced);
       } catch (e) {
         console.error('Failed to load cart', e);
       }

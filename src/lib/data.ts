@@ -126,7 +126,7 @@ export const products = [
     "title": "Tramp Stamp Handbag HB001",
     "handle": "bag-ass",
     "body_html": "<p>A tramp stamp on a tote. The hyperreal body print wraps edge to edge, \"Ary-G\" on the front, \"Know Your Place\" on the back in the exact placement your mother warned you about. Functional, subversive, completely aware of itself.</p>\n<p><strong>Product Details</strong></p>",
-    "vendor": "kyd-test",
+    "vendor": "Know Your Place",
     "product_type": "",
     "tags": [],
     "variants": [
