@@ -1,30 +1,35 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Home() {
   const logoRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const logo = logoRef.current;
     if (!logo) return;
 
-    const logoW = 460;
-    const logoH = 220;
+    const mobile = window.innerWidth < 600;
+    setIsMobile(mobile);
 
-    let x = Math.random() * (window.innerWidth - logoW);
-    let y = Math.random() * (window.innerHeight - logoH);
-    let dx = 1.5;
-    let dy = 1.2;
+    const logoW = mobile ? Math.min(240, window.innerWidth * 0.65) : 460;
+    const logoH = logoW * (220 / 460);
+    logo.style.width = `${logoW}px`;
+
+    let x = Math.random() * Math.max(10, window.innerWidth - logoW);
+    let y = Math.random() * Math.max(10, window.innerHeight - logoH);
+    let dx = mobile ? 1.0 : 1.5;
+    let dy = mobile ? 0.8 : 1.2;
     let raf: number;
 
     const animate = () => {
       x += dx;
       y += dy;
 
-      const maxX = window.innerWidth - logoW;
-      const maxY = window.innerHeight - logoH;
+      const maxX = Math.max(1, window.innerWidth - logoW);
+      const maxY = Math.max(1, window.innerHeight - logoH);
 
       if (x <= 0) { x = 0; dx = Math.abs(dx); }
       if (x >= maxX) { x = maxX; dx = -Math.abs(dx); }
@@ -49,12 +54,12 @@ export default function Home() {
         backgroundColor: '#b82e2e',
       }}
     >
-      {/* Red bubble-wrap texture — same image as body but tinted red via the bg color behind */}
+      {/* Red bubble-wrap texture */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: "url('/assets/lockscreen-texture.webp')",
+          backgroundImage: `url('${isMobile ? '/assets/lockscreen-texture-mobile.webp' : '/assets/lockscreen-texture.webp'}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           mixBlendMode: 'multiply',
@@ -77,8 +82,8 @@ export default function Home() {
         }}
       >
         <img
-          src="/assets/lockscreen-logo.webp"
-          alt="KYD Logo"
+          src={isMobile ? '/assets/lockscreen-logo-mobile.webp' : '/assets/lockscreen-logo.webp'}
+          alt="Know Your Place Logo"
           style={{ width: '100%', height: 'auto', display: 'block' }}
         />
       </div>

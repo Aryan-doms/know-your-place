@@ -83,16 +83,64 @@ export default function ProductPage({ params }: { params: Promise<{ handle: stri
           </div>
         </header>
 
+        {/* Responsive CSS */}
+        <style>{`
+          .product-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding: 0 40px;
+            max-width: 1400px;
+            margin: 40px auto 0;
+          }
+          .product-image-col {
+            flex: 1 1 55%;
+            min-width: 300px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .product-details-col {
+            flex: 1 1 35%;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+          }
+          @media (max-width: 768px) {
+            .product-layout {
+              padding: 0 16px !important;
+              margin-top: 16px !important;
+              gap: 24px !important;
+            }
+            .product-image-col, .product-details-col {
+              flex: 1 1 100% !important;
+              width: 100% !important;
+            }
+            .more-like-this-wrapper {
+              padding: 40px 16px !important;
+            }
+            .more-like-this-grid {
+              flex-wrap: wrap !important;
+              gap: 12px !important;
+            }
+            .more-like-this-item {
+              flex: 1 1 45% !important;
+              min-width: 130px !important;
+            }
+          }
+        `}</style>
+
         {/* Main Content */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5%', padding: '0 40px', maxWidth: '1400px', margin: '40px auto 0' }}>
+        <div className="product-layout">
           
           {/* Left Image */}
-          <div style={{ width: '55%', backgroundColor: '#f0f0f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div className="product-image-col">
             <img src={product.images[0]} alt={product.title} style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
           </div>
 
           {/* Right Details */}
-          <div style={{ width: '40%', display: 'flex', flexDirection: 'column' }}>
+          <div className="product-details-col">
             <h2 style={{ textTransform: 'uppercase', fontWeight: 700, fontSize: '13px', letterSpacing: '0.08em', margin: '0 0 8px 0' }}>
               {product.title}
             </h2>
@@ -195,11 +243,11 @@ export default function ProductPage({ params }: { params: Promise<{ handle: stri
         </div>
 
         {/* More Like This */}
-        <div style={{ padding: '80px 40px', maxWidth: '1400px', margin: '0 auto' }}>
+        <div className="more-like-this-wrapper" style={{ padding: '80px 40px', maxWidth: '1400px', margin: '0 auto' }}>
           <h3 style={{ textTransform: 'uppercase', fontSize: '14px', letterSpacing: '0.05em', marginBottom: '30px' }}>More like this</h3>
-          <div style={{ display: 'flex', gap: '20px' }}>
+          <div className="more-like-this-grid" style={{ display: 'flex', gap: '20px' }}>
             {moreProducts.map((p: any) => (
-              <div key={p.id} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div key={p.id} className="more-like-this-item" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <Link href={`/product/${p.handle}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <div style={{ backgroundColor: '#f0f0f0', aspectRatio: '3/4', marginBottom: '12px' }}>
                     <img src={p.images[0]} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

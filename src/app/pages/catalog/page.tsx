@@ -92,7 +92,7 @@ export default function Catalog() {
       {/* Left Sidebar */}
       <div style={{
         position: 'fixed', top: 0, left: sidebarOpen ? 0 : -340,
-        width: 320, height: '100vh', backgroundColor: '#fff',
+        width: 'min(320px, 85vw)', maxWidth: '85vw', height: '100vh', backgroundColor: '#fff',
         zIndex: 50, transition: 'left 0.28s ease',
         display: 'flex', flexDirection: 'column',
         borderRight: '1px solid #e0e0e0',
@@ -204,7 +204,7 @@ export default function Catalog() {
         <h1 style={{
           fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
           fontWeight: 900,
-          fontSize: 26,
+          fontSize: 'clamp(16px, 5vw, 26px)',
           color: '#000',
           position: 'absolute',
           left: '50%',
@@ -239,6 +239,25 @@ export default function Catalog() {
         </button>
       </div>
 
+      {/* Responsive Grid CSS */}
+      <style>{`
+        .catalog-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          padding: 0 12px 80px;
+          max-width: 1400px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 1;
+        }
+        @media (max-width: 768px) {
+          .catalog-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            padding: 0 8px 60px !important;
+          }
+        }
+      `}</style>
+
       {/* Active filter pills */}
       {activeFilters.size > 0 && (
         <div style={{ padding: '0 20px 12px', display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -260,13 +279,7 @@ export default function Catalog() {
       )}
 
       {/* Product Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        padding: '0 12px 80px',
-        maxWidth: 1400, margin: '0 auto',
-        position: 'relative', zIndex: 1,
-      }}>
+      <div className="catalog-grid">
         {filteredProducts.map((product: any) => {
           const sku = extractSku(product.title);
           const titleWithoutSku = product.title.replace(/\s+[A-Z]{1,4}\d{3,4}$/, '').trim();

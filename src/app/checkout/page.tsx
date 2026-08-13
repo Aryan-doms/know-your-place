@@ -133,13 +133,33 @@ export default function CheckoutPage() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#fff', fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', color: '#1a1a1a' }}>
+      
+      {/* Mobile Responsive CSS */}
+      <style>{`
+        @media (max-width: 768px) {
+          .checkout-left {
+            flex: 1 1 100% !important;
+            padding: 24px 16px !important;
+            border-right: none !important;
+          }
+          .checkout-right {
+            flex: 1 1 100% !important;
+            padding: 24px 16px !important;
+            border-left: none !important;
+            border-top: 1px solid #e1e1e1 !important;
+            position: relative !important;
+            height: auto !important;
+          }
+        }
+      `}</style>
+
       <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', minHeight: '100vh', flexWrap: 'wrap' }}>
         
         {/* LEFT PANEL */}
-        <div style={{ flex: '1 1 55%', padding: '50px 48px 50px 24px', borderRight: '1px solid #e1e1e1', boxSizing: 'border-box' }}>
+        <div className="checkout-left" style={{ flex: '1 1 55%', padding: '50px 48px 50px 24px', borderRight: '1px solid #e1e1e1', boxSizing: 'border-box' }}>
           
           <div style={{ marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontWeight: 900, fontSize: '28px', textTransform: 'uppercase' }}>Know Your Place</span>
+            <span style={{ fontWeight: 900, fontSize: 'clamp(20px, 6vw, 28px)', textTransform: 'uppercase' }}>Know Your Place</span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
               <path d="M3 6h18" />
@@ -238,7 +258,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* RIGHT PANEL */}
-        <div style={{
+        <div className="checkout-right" style={{
           flex: '0 0 45%', padding: '50px 24px 50px 48px',
           backgroundColor: '#f5f5f5', borderLeft: '1px solid #e1e1e1', position: 'sticky', top: 0, height: '100vh', overflowY: 'auto', boxSizing: 'border-box'
         }}>
